@@ -21,4 +21,38 @@
 \f1\b0 - 
 \f0\b lsmod			
 \f1\b0 shows all modules currently loaded\
+
+\f0\b - modprobe		
+\f1\b0 used to manually load a kernel file, including its dependencies\
+
+\f0\b - modprobe -r
+\f1\b0 		used to manually unload a kernel file\
+
+\f0\b - modinfo			
+\f1\b0 provides information about kernel modules\
+
+\f0\b - depmod
+\f1\b0 			generates the modules.dep kernel module dependencies file\
+\
+- Kernel module parameters as listed by 
+\f0\b modinfo 
+\f1\b0 can be specified in include files in /etc/modprobe.d/\
+\
+\
+\
+
+\f0\b Examples:\
+- lsmod | grep cdrom\
+
+\f1\b0 - if necessary: 
+\f0\b modprobe -r cdrom\
+
+\f1\b0 - if failing: 
+\f0\b modprobe -r isofs; modprobe -r sr_mod\
+- lsmod | grep cdrom\
+- modprobe isofs\
+- lsmod | grep cdrom\
+- modprobe -r cdrom\
+
+\f1\b0 \
 }
