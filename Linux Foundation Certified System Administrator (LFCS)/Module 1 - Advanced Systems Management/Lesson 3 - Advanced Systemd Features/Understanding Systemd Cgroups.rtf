@@ -1,0 +1,48 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs29\fsmilli14600 \cf0 Understanding Systemd Cgroups:\
+
+\f1\b0 - Control Groups place resources in controllers that represent the type of resource\
+- Some common default controllers are 
+\f0\b cpu, memory, 
+\f1\b0 and 
+\f0\b blkio
+\f1\b0  (block-I/O)\
+- These controllers are subdivided in a tree structure where different weights or limits are applied to each branch\
+	- Each of these branches is a cgroup\
+	- One or more processes are assigned to a cgroup\
+- Cgroups can be applied from the command line, or from systemd\
+	- Manual creation happened through the 
+\f0\b cgconfig 
+\f1\b0 service and the 
+\f0\b cgred 
+\f1\b0 process (in the past)\
+	- In all cases, cgroup settings are written to /sys/fs/cgroups\
+\
+\
+\
+
+\f0\b Understanding Systemd Slices:\
+
+\f1\b0 - Systemd divides 
+\f0\b cpu, cpuacct, blkio, 
+\f1\b0 and 
+\f0\b memory 
+\f1\b0 into slices\
+	- 
+\f0\b system 
+\f1\b0 for system processes and daemons\
+	- 
+\f0\b machine 
+\f1\b0 for virtual machines\
+	- 
+\f0\b user 
+\f1\b0 for user sessions\
+- Apart from that, you can create custom slices\
+\
+}

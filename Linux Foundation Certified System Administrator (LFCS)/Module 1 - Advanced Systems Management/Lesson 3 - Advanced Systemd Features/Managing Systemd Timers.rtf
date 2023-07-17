@@ -1,0 +1,19 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs29\fsmilli14600 \cf0 Understanding Timers:\
+
+\f1\b0 - A systemd timer is used to start the corresponding service at a specific time, or on occurrence of a specific event\
+- The timer and service need to have the same filename\
+- Use OnCalendar to specify when the timer should be started in cron-like style\
+- Use OnBootSec or OnUnitActiveSec to run the timer based on other events\
+- When using timers, the timer is enabled/started, not the service\
+- Read 
+\f0\b man 7 systemd.time 
+\f1\b0 for more information\
+\
+}

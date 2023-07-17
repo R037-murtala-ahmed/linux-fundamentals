@@ -1,0 +1,86 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs29\fsmilli14600 \cf0 Managing Device Access:\
+
+\f1\b0 - The kernel itself is small and contains essential drivers only\
+- Additional drivers are provided dynamically\
+	- InitramFS is loaded while booting\
+	- systemd-udevd takes care of loading drivers automatically and on demand\
+- To access devices, device files in /dev are used\
+	- The kernel doesn\'92t know about device file names\
+	- It uses device major and minor to address devices\
+\
+\
+
+\f0\b Understanding Hardware Initialization:\
+
+\f1\b0 - The Linux kernel addresses hardware using drivers\
+- Drivers are available as kernel modules\
+- Drivers can be provided through the initramfs, or loaded dynamically through systemd-udevd\
+- Device files in /dev provide a user interface to the devices\
+- Device files are mostly auto-generated\
+- Device files correspond to the device nodes, which are a major and minor number that the kernel uses to identify devices\
+- Use 
+\f0\b mknod 
+\f1\b0 to manually generate\
+\
+\
+
+\f0\b Understanding sysfs:\
+
+\f1\b0 - /sys is used to provide information about devices and their attributes\
+- /sys/devices is dedicated to device information\
+- The 
+\f0\b udevadm 
+\f1\b0 command provides an interface to query device information from /sys\
+	- Use for instance 
+\f0\b udevadm info \'97query=all \'97name=/dev/sda
+\f1\b0 \
+\
+\
+
+\f0\b Understanding systemd-udevd:\
+
+\f1\b0 - The Linux kernel initiates devices loading and next sends out uevents to the systemd-udevd user space daemon\
+- systemd-udevd catches the event and decides how to handle it based on attributes that it has received in the event\
+- systemd-udevd next reads its rules and acts based on these rules\
+	- Default rules are in /usr/lib/udev/rules.d\
+	- Custom rules are in /etc/udev/rules.d\
+\
+\
+
+\f0\b Demo: Using Udev Rules:\
+
+\f1\b0 1. start 
+\f0\b udevadm monitor 
+\f1\b0 and plug in a USB thumb drive\
+2. 
+\f0\b cat /lib/udev/rules.d/60-persistent-storage.rules\
+
+\f1\b0 3. 
+\f0\b ls -l /dev/disk\
+
+\f1\b0 4. 
+\f0\b udevadm info \'97query=all \'97name=/dev/sdb\
+
+\f1\b0 5. 
+\f0\b udevadm info \'97attribute-walk \'97name=/dev/sdb\
+
+\f1\b0 6. create a custom udev rule 
+\f0\b /etc/udev/rules.d/50-custom.rules : \
+	ACTION==\'93add\'94, SUBSYSTEM==\'93block\'94, DRIVERS=\'93usb-storage\'94,\
+	SYMLINK+=\'93usb/%k\'94, RUN+=\'93/usr/bin/logger CUSTOMUDEV Added %k\'94\
+
+\f1\b0 7. 
+\f0\b systemctl restart systemd-udevd\
+
+\f1\b0 8. Plug a USB thumb drive and observe\
+
+\f0\b  \
+\
+}
