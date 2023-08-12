@@ -1,0 +1,68 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs29\fsmilli14600 \cf0 Applying POSIX Resource Limits:\
+
+\f1\b0 - Set runtime limits with 
+\f0\b ulimit\
+
+\f1\b0 	- It applies to the shell in which the command is used\
+- Apply persistent 
+\f0\b ulimit 
+\f1\b0 settings to /etc/security/limits.conf\
+- Soft limits can be modified by the user, hard limits implement an absolute ceiling\
+	- Users can set soft limits, but only lower than the enforced hard limit\
+\
+\
+\
+
+\f0\b Managing Persistent Limits:\
+
+\f1\b0 - 
+\f0\b pam_limits 
+\f1\b0 (pluggable authentication manager)
+\f0\b  
+\f1\b0 is applied from PAM session to configure persistent limits\
+- It works with /etc/security/limits.conf and /etc/security/limits.d/*.conf\
+- See 
+\f0\b man 5 limits.conf 
+\f1\b0 for documentation\
+	- Notice that not all limits currently work on all distributions. The 
+\f0\b rss 
+\f1\b0 limit for instance does not work\
+- Example: set the maximum amount of logins for students (group) to 2, creating a file with the contents /etc/security/limits.d/students.conf and the following contents:\
+	- 
+\f0\b @students hard maxlogins 2\
+
+\f1\b0 \
+\
+\
+
+\f0\b Setting Limits to Services:\
+
+\f1\b0 - In systemd units, add the 
+\f0\b Limit* 
+\f1\b0 entries to the 
+\f0\b [Service] 
+\f1\b0 block of a unit file to limit what services can do\
+- If, for instance, you want to allow your blah.service a maximum of 60 seconds of CPU time before it is killed, add the following to 
+\f0\b /etc/systemd/system/blah.service.d/10-cpulimits.conf
+\f1\b0 \
+[Service]\
+LimitCPU=60\
+- Use 
+\f0\b systemctl daemon-reload 
+\f1\b0 and 
+\f0\b systemctl restart blah 
+\f1\b0 to make the changes effective\
+- See 
+\f0\b man 5 systemd.exec 
+\f1\b0 and 
+\f0\b man 2 setrlimit 
+\f1\b0 for a full list of Limit* settings\
+\
+}
